@@ -904,7 +904,7 @@ function main()
         end
     end)
 
-    chat("{00FF00}[PrimeBot v4.5]{FFFFFF} Panel Ready! Ketik {00FF00}/autosusu")
+    chat("{00FF00}[PrimeBot v4.9]{FFFFFF} Panel Ready! Ketik {00FF00}/autosusu")
 
     wait(1000)
     silentCheck = true
