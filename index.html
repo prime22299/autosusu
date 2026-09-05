@@ -16,6 +16,8 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;display:flex;flex-direction:column}
+
+/* LOGIN */
 #ls{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:999}
 .lb{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:48px 40px;width:360px;text-align:center}
 .ll{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--cyan);margin-bottom:8px;text-transform:uppercase}
@@ -26,6 +28,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .btn-login{width:100%;padding:13px;background:var(--cyan);color:#000;border:none;border-radius:8px;font-family:var(--sans);font-weight:600;font-size:14px;cursor:pointer;transition:opacity .2s;margin-top:4px}
 .btn-login:hover{opacity:.85}
 .le{color:var(--red);font-size:12px;margin-top:10px;font-family:var(--mono);min-height:16px}
+
+/* TOPBAR */
 header{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:10}
 .logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--cyan);letter-spacing:.1em}
 .logo span{color:var(--muted);font-weight:400}
@@ -33,56 +37,116 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0 3
 .sd{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;box-shadow:0 0 6px var(--green);margin-right:6px}
 #btn-lo{background:none;border:1px solid var(--border);color:var(--muted);font-family:var(--mono);font-size:11px;padding:5px 12px;border-radius:6px;cursor:pointer;transition:all .2s}
 #btn-lo:hover{border-color:var(--red);color:var(--red)}
-main{flex:1;display:grid;grid-template-columns:320px 1fr;gap:24px;max-width:1280px;margin:0 auto;width:100%;padding:28px 32px}
+
+/* LAYOUT */
+main{flex:1;display:grid;grid-template-columns:320px 1fr;gap:24px;max-width:1400px;margin:0 auto;width:100%;padding:28px 32px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.ch{padding:16px 20px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase}
+.ch{padding:16px 20px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between}
 .cb{padding:20px}
 .lc{display:flex;flex-direction:column;gap:16px}
+
 label{display:block;font-size:11px;font-family:var(--mono);color:var(--muted);margin-bottom:6px;letter-spacing:.05em}
-select,input[type=text]{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:13px;color:var(--text);outline:none;transition:border-color .2s;appearance:none}
-select:focus,input[type=text]:focus{border-color:var(--cyan)}
+input[type=text]{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:13px;color:var(--text);outline:none;transition:border-color .2s;appearance:none}
+input[type=text]:focus{border-color:var(--cyan)}
+
 .dg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .db{padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:12px;cursor:pointer;transition:all .2s;text-align:center}
 .db:hover{border-color:var(--cyan);color:var(--cyan)}
 .db.active{border-color:var(--cyan);background:var(--cd);color:var(--cyan)}
+
 .btn-gen{width:100%;padding:14px;background:linear-gradient(135deg,#0090b3,#00d4ff);color:#000;border:none;border-radius:8px;font-family:var(--sans);font-weight:700;font-size:14px;cursor:pointer;letter-spacing:.03em;transition:opacity .2s,transform .1s}
 .btn-gen:hover{opacity:.9}
 .btn-gen:active{transform:scale(.98)}
+
 .kr{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:none;flex-direction:column;gap:10px}
 .kr.show{display:flex}
 .kd{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cyan);letter-spacing:.08em;word-break:break-all}
 .km{font-family:var(--mono);font-size:10px;color:var(--muted)}
 .btn-copy{padding:8px 16px;background:var(--cd);border:1px solid var(--cyan);border-radius:6px;color:var(--cyan);font-family:var(--mono);font-size:11px;cursor:pointer;transition:all .2s;align-self:flex-start}
 .btn-copy:hover{background:var(--cyan);color:#000}
+
+/* STATS */
 .sr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .sb{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 12px;text-align:center}
 .sn{font-family:var(--mono);font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px}
 .sl{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+
+/* CHART */
+.chart-wrap{padding:16px 20px 20px}
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:80px;margin-bottom:6px}
+.bar-col{display:flex;flex-direction:column;align-items:center;flex:1;gap:4px;height:100%}
+.bar-inner{width:100%;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--cyan),rgba(0,212,255,.3));min-height:2px;transition:height .4s ease;position:relative;cursor:pointer}
+.bar-inner:hover{background:linear-gradient(180deg,#fff,var(--cyan))}
+.bar-inner .bar-tip{position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-family:var(--mono);font-size:10px;color:var(--cyan);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+.bar-inner:hover .bar-tip{opacity:1}
+.bar-lbl{font-family:var(--mono);font-size:9px;color:var(--muted);text-align:center}
+
+/* TABLE */
 .rc{display:flex;flex-direction:column;gap:16px}
-.lt2{display:flex;gap:10px;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border)}
-.lt2 input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none}
+.lt2{display:flex;gap:8px;align-items:center;padding:12px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.lt2 input{flex:1;min-width:160px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none}
 .lt2 input:focus{border-color:var(--cyan)}
-.btn-exp,.btn-ref{padding:8px 14px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:var(--mono);font-size:11px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.filter-btns{display:flex;gap:6px}
+.fb{padding:6px 12px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all .2s}
+.fb:hover,.fb.on{border-color:var(--cyan);color:var(--cyan);background:var(--cd)}
+.fb.on-green{border-color:var(--green);color:var(--green);background:var(--gd)}
+.fb.on-red{border-color:var(--red);color:var(--red);background:var(--rd)}
+.btn-exp,.btn-ref{padding:7px 12px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:var(--mono);font-size:11px;cursor:pointer;white-space:nowrap;transition:all .2s}
 .btn-exp:hover{border-color:var(--cyan);color:var(--cyan)}
 .btn-ref:hover{border-color:var(--green);color:var(--green)}
+
 .ktw{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12px;font-family:var(--mono)}
 thead th{padding:10px 16px;text-align:left;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap}
-tbody tr{border-bottom:1px solid rgba(30,42,58,.6);transition:background .15s}
-tbody tr:hover{background:rgba(0,212,255,.04)}
-td{padding:12px 16px;vertical-align:top;color:var(--text)}
+tbody tr{border-bottom:1px solid rgba(30,42,58,.6);transition:background .15s;cursor:pointer}
+tbody tr:hover{background:rgba(0,212,255,.06)}
+td{padding:11px 16px;vertical-align:middle;color:var(--text)}
 .kc{color:var(--cyan);font-weight:600;letter-spacing:.06em;white-space:nowrap}
+
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
 .ba{background:var(--gd);color:var(--green);border:1px solid rgba(0,255,136,.25)}
 .be{background:var(--rd);color:var(--red);border:1px solid rgba(255,61,90,.25)}
 .bp{background:rgba(255,200,70,.10);color:var(--yellow);border:1px solid rgba(255,200,70,.25)}
-.dl{display:flex;flex-direction:column;gap:3px}
-.dc{font-size:10px;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 7px;display:inline-block;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nd{color:var(--border);font-size:11px}
+
+.dev-count{display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--text)}
+.dev-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.dev-count.zero{color:var(--muted)}
+.dev-count.zero .dev-dot{background:var(--border)}
+
 .btn-rev{padding:4px 10px;background:none;border:1px solid var(--border);border-radius:5px;color:var(--muted);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .btn-rev:hover{border-color:var(--red);color:var(--red)}
+
 .es{text-align:center;padding:60px 20px;color:var(--muted);font-family:var(--mono);font-size:12px;line-height:2}
-#toast{position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 18px;font-family:var(--mono);font-size:12px;color:var(--text);transform:translateY(80px);opacity:0;transition:all .3s;z-index:100;pointer-events:none}
+
+/* MODAL */
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+#modal.show{display:flex}
+.modal-box{background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:520px;max-height:80vh;overflow-y:auto}
+.modal-hdr{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--cyan);letter-spacing:.08em}
+.modal-close{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:4px;transition:color .2s}
+.modal-close:hover{color:var(--red)}
+.modal-body{padding:24px}
+.mrow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(30,42,58,.5)}
+.mrow:last-child{border-bottom:none}
+.mlabel{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.mval{font-family:var(--mono);font-size:12px;color:var(--text);text-align:right;max-width:300px;word-break:break-all}
+.dev-list{margin-top:16px}
+.dev-list-title{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.dev-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px}
+.dev-icon{width:32px;height:32px;border-radius:8px;background:var(--cd);border:1px solid rgba(0,212,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.dev-info{flex:1;min-width:0}
+.dev-name{font-family:var(--mono);font-size:12px;color:var(--text);word-break:break-all}
+.dev-sub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:2px}
+.no-dev{text-align:center;padding:30px;color:var(--muted);font-family:var(--mono);font-size:12px}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px}
+.btn-modal-rev{flex:1;padding:10px;background:none;border:1px solid var(--red);border-radius:8px;color:var(--red);font-family:var(--mono);font-size:12px;cursor:pointer;transition:all .2s}
+.btn-modal-rev:hover{background:var(--rd)}
+.btn-modal-close{flex:1;padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:12px;cursor:pointer;transition:all .2s}
+.btn-modal-close:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* MISC */
+#toast{position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 18px;font-family:var(--mono);font-size:12px;color:var(--text);transform:translateY(80px);opacity:0;transition:all .3s;z-index:300;pointer-events:none}
 #toast.show{transform:translateY(0);opacity:1}
 #toast.ok{border-color:var(--green);color:var(--green)}
 #toast.err{border-color:var(--red);color:var(--red)}
@@ -96,6 +160,7 @@ td{padding:12px 16px;vertical-align:top;color:var(--text)}
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="ls">
   <div class="lb">
     <div class="ll">AutoSusu CPRP</div>
@@ -107,6 +172,7 @@ td{padding:12px 16px;vertical-align:top;color:var(--text)}
   </div>
 </div>
 
+<!-- TOPBAR -->
 <header>
   <div class="logo">AutoSusu <span>/ Admin</span></div>
   <div class="hm">
@@ -116,8 +182,11 @@ td{padding:12px 16px;vertical-align:top;color:var(--text)}
   </div>
 </header>
 
+<!-- MAIN -->
 <main>
+  <!-- LEFT -->
   <div class="lc">
+    <!-- STATS -->
     <div class="card">
       <div class="ch">📊 Statistik</div>
       <div class="cb">
@@ -128,6 +197,17 @@ td{padding:12px 16px;vertical-align:top;color:var(--text)}
         </div>
       </div>
     </div>
+
+    <!-- CHART -->
+    <div class="card">
+      <div class="ch">📈 Key Dibuat (7 Hari)<span id="chart-total" style="color:var(--muted);font-size:10px"></span></div>
+      <div class="chart-wrap">
+        <div class="chart-bars" id="chart-bars"></div>
+        <div id="chart-labels" style="display:flex;gap:6px"></div>
+      </div>
+    </div>
+
+    <!-- GENERATE -->
     <div class="card">
       <div class="ch">🔑 Generate Key</div>
       <div class="cb" style="display:flex;flex-direction:column;gap:16px">
@@ -144,29 +224,36 @@ td{padding:12px 16px;vertical-align:top;color:var(--text)}
             <button class="db" data-days="0" onclick="selDur(this)">Permanent</button>
           </div>
         </div>
-        <button class="btn-gen" onclick="generateKey()">Generate Key</button>
+        <button class="btn-gen" onclick="generateKey()">⚡ Generate Key</button>
         <div class="kr" id="kr">
           <div class="kd" id="ko"></div>
           <div class="km" id="km"></div>
-          <button class="btn-copy" onclick="copyKey()">Copy Key</button>
+          <button class="btn-copy" onclick="copyKey()">📋 Copy Key</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- RIGHT -->
   <div class="rc">
     <div class="card" style="flex:1">
-      <div class="ch">Daftar Key</div>
+      <div class="ch">🗃 Daftar Key</div>
       <div class="lt2">
         <input type="text" id="si" placeholder="Cari key atau label..." oninput="filterTable()"/>
-        <button class="btn-ref" onclick="loadKeys()">Refresh</button>
+        <div class="filter-btns">
+          <button class="fb" onclick="setFilter('all',this)">Semua</button>
+          <button class="fb" onclick="setFilter('aktif',this)">Aktif</button>
+          <button class="fb" onclick="setFilter('expired',this)">Expired</button>
+          <button class="fb" onclick="setFilter('perm',this)">Permanent</button>
+        </div>
+        <button class="btn-ref" onclick="loadKeys()">↻</button>
         <button class="btn-exp" onclick="exportJSON()">JSON</button>
         <button class="btn-exp" onclick="exportTXT()">TXT</button>
       </div>
       <div class="ktw">
         <table>
           <thead>
-            <tr><th>Key</th><th>Label</th><th>Status</th><th>Expired</th><th>Devices</th><th>Dibuat</th><th></th></tr>
+            <tr><th>Key</th><th>Label</th><th>Status</th><th>Expired</th><th>Pengguna</th><th>Dibuat</th><th></th></tr>
           </thead>
           <tbody id="tb">
             <tr class="lr"><td colspan="7"><span class="spin"></span>Memuat...</td></tr>
@@ -178,6 +265,31 @@ td{padding:12px 16px;vertical-align:top;color:var(--text)}
   </div>
 </main>
 
+<!-- MODAL DETAIL -->
+<div id="modal">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div class="modal-title" id="modal-key">—</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="mrow"><span class="mlabel">Label</span><span class="mval" id="m-label">—</span></div>
+      <div class="mrow"><span class="mlabel">Status</span><span class="mval" id="m-status">—</span></div>
+      <div class="mrow"><span class="mlabel">Dibuat</span><span class="mval" id="m-created">—</span></div>
+      <div class="mrow"><span class="mlabel">Expired</span><span class="mval" id="m-expired">—</span></div>
+      <div class="mrow"><span class="mlabel">Total Pengguna</span><span class="mval" id="m-devcount" style="color:var(--cyan);font-size:16px;font-weight:700">—</span></div>
+      <div class="dev-list">
+        <div class="dev-list-title">📱 Daftar Device</div>
+        <div id="m-devlist"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-rev" id="m-rev-btn">🗑 Revoke Key</button>
+      <button class="btn-modal-close" onclick="closeModal()">Tutup</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -185,9 +297,10 @@ const CFG = {
   apiKey:    "AIzaSyAPw1UXjpQIxxznw5Mo8VEkXtaty5upbos",
   projectId: "autosusu-cprp",
   adminUser: "admin",
-  adminPass: "luxxy2025",
+  adminPass: "prime",
 };
 
+// ══ AUTH ══
 function doLogin(){
   const u=document.getElementById('lu').value.trim();
   const p=document.getElementById('lp').value;
@@ -206,6 +319,7 @@ function doLogout(){
 }
 document.getElementById('lp').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
+// ══ FIREBASE ══
 const BASE=`https://firestore.googleapis.com/v1/projects/${CFG.projectId}/databases/(default)/documents`;
 const KEY=CFG.apiKey;
 
@@ -242,7 +356,8 @@ function docToObj(doc){
   return o;
 }
 
-let selDays=30,allKeys=[];
+// ══ GENERATE ══
+let selDays=30,allKeys=[],activeFilter='all';
 
 function selDur(btn){
   document.querySelectorAll('.db').forEach(b=>b.classList.remove('active'));
@@ -282,17 +397,47 @@ function copyKey(){
     .then(()=>toast('Key disalin!','ok'));
 }
 
+// ══ LOAD & RENDER ══
 async function loadKeys(){
   const tb=document.getElementById('tb');
   tb.innerHTML='<tr class="lr"><td colspan="7"><span class="spin"></span>Memuat...</td></tr>';
   try{
     const data=await fbList('keys');
     allKeys=(data.documents||[]).map(docToObj);
-    renderTable(allKeys);
+    applyFilter();
     updateStats(allKeys);
+    renderChart(allKeys);
   }catch(e){
     tb.innerHTML=`<tr class="lr"><td colspan="7" style="color:var(--red)">Error: ${e.message}</td></tr>`;
   }
+}
+
+function applyFilter(){
+  const q=document.getElementById('si').value.toLowerCase();
+  const now=Math.floor(Date.now()/1000);
+  let filtered=allKeys.filter(k=>{
+    const matchQ=k._id.toLowerCase().includes(q)||(k.label||'').toLowerCase().includes(q);
+    if(!matchQ)return false;
+    const exp=k.expiredAt||0,perm=exp===0,dead=!perm&&now>exp;
+    if(activeFilter==='aktif') return !dead&&!perm;
+    if(activeFilter==='expired') return dead;
+    if(activeFilter==='perm') return perm;
+    return true;
+  });
+  renderTable(filtered);
+}
+
+function filterTable(){applyFilter();}
+
+function setFilter(f,btn){
+  activeFilter=f;
+  document.querySelectorAll('.fb').forEach(b=>{
+    b.classList.remove('on','on-green','on-red');
+  });
+  if(f==='aktif') btn.classList.add('on-green');
+  else if(f==='expired') btn.classList.add('on-red');
+  else if(f!=='all') btn.classList.add('on');
+  applyFilter();
 }
 
 function renderTable(keys){
@@ -304,19 +449,20 @@ function renderTable(keys){
   tb.innerHTML=keys.map(k=>{
     const exp=k.expiredAt||0,perm=exp===0,dead=!perm&&now>exp;
     const badge=perm?'<span class="badge bp">PERMANENT</span>':dead?'<span class="badge be">EXPIRED</span>':'<span class="badge ba">AKTIF</span>';
-    const expStr=perm?'Permanent':new Date(exp*1000).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
+    const expStr=perm?'∞':new Date(exp*1000).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
     const crtStr=k.createdAt?new Date(k.createdAt*1000).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'-';
-    const devs=Array.isArray(k.devices)&&k.devices.length
-      ?`<div class="dl">${k.devices.map(d=>`<span class="dc" title="${d}">${d}</span>`).join('')}</div>`
-      :'<span class="nd">—</span>';
-    return `<tr>
+    const devCount=Array.isArray(k.devices)?k.devices.length:0;
+    const devBadge=devCount>0
+      ?`<span class="dev-count"><span class="dev-dot"></span>${devCount} device</span>`
+      :`<span class="dev-count zero"><span class="dev-dot"></span>Belum ada</span>`;
+    return `<tr onclick="openModal('${k._id}')">
       <td class="kc">${k._id}</td>
       <td>${k.label||'-'}</td>
       <td>${badge}</td>
       <td style="font-size:11px;color:var(--muted)">${expStr}</td>
-      <td>${devs}</td>
+      <td>${devBadge}</td>
       <td style="font-size:11px;color:var(--muted)">${crtStr}</td>
-      <td><button class="btn-rev" onclick="revokeKey('${k._id}')">Revoke</button></td>
+      <td><button class="btn-rev" onclick="event.stopPropagation();revokeKey('${k._id}')">Revoke</button></td>
     </tr>`;
   }).join('');
 }
@@ -330,17 +476,115 @@ function updateStats(keys){
   document.getElementById('sd2').textContent=dev;
 }
 
+// ══ CHART ══
+function renderChart(keys){
+  const bars=document.getElementById('chart-bars');
+  const labels=document.getElementById('chart-labels');
+  const totalEl=document.getElementById('chart-total');
+
+  // Buat bucket 7 hari terakhir
+  const now=new Date();
+  const days=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date(now);
+    d.setDate(d.getDate()-i);
+    days.push({
+      date:d,
+      label:d.toLocaleDateString('id-ID',{weekday:'short'}),
+      count:0
+    });
+  }
+
+  // Hitung key per hari
+  keys.forEach(k=>{
+    if(!k.createdAt)return;
+    const d=new Date(k.createdAt*1000);
+    const ds=d.toDateString();
+    days.forEach(day=>{if(day.date.toDateString()===ds)day.count++;});
+  });
+
+  const maxCount=Math.max(...days.map(d=>d.count),1);
+  const total=days.reduce((s,d)=>s+d.count,0);
+  totalEl.textContent=`${total} minggu ini`;
+
+  bars.innerHTML=days.map(d=>{
+    const pct=Math.round((d.count/maxCount)*100);
+    return `<div class="bar-col">
+      <div class="bar-inner" style="height:${Math.max(pct,2)}%">
+        <div class="bar-tip">${d.count} key</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  labels.innerHTML=days.map(d=>`<div class="bar-lbl" style="flex:1;text-align:center">${d.label}</div>`).join('');
+}
+
+// ══ MODAL DETAIL ══
+let modalKey='';
+
+function openModal(keyId){
+  const k=allKeys.find(x=>x._id===keyId);
+  if(!k)return;
+  modalKey=keyId;
+
+  const now=Math.floor(Date.now()/1000);
+  const exp=k.expiredAt||0,perm=exp===0,dead=!perm&&now>exp;
+  const statusHtml=perm?'<span class="badge bp">PERMANENT</span>':dead?'<span class="badge be">EXPIRED</span>':'<span class="badge ba">AKTIF</span>';
+  const expStr=perm?'Permanent (tidak ada expired)':new Date(exp*1000).toLocaleString('id-ID');
+  const crtStr=k.createdAt?new Date(k.createdAt*1000).toLocaleString('id-ID'):'-';
+  const devices=Array.isArray(k.devices)?k.devices:[];
+
+  document.getElementById('modal-key').textContent=k._id;
+  document.getElementById('m-label').textContent=k.label||'-';
+  document.getElementById('m-status').innerHTML=statusHtml;
+  document.getElementById('m-created').textContent=crtStr;
+  document.getElementById('m-expired').textContent=expStr;
+  document.getElementById('m-devcount').textContent=devices.length;
+
+  // Device list
+  const dl=document.getElementById('m-devlist');
+  if(devices.length===0){
+    dl.innerHTML='<div class="no-dev">📱 Belum ada device yang menggunakan key ini</div>';
+  } else {
+    dl.innerHTML=devices.map((d,i)=>{
+      const isPC=d.startsWith('DEV_')&&!d.includes('IMEI');
+      const isImei=d.startsWith('IMEI_');
+      const icon=isImei?'📱':isPC?'💻':'🖥️';
+      const type=isImei?'Android (IMEI)':isPC?'Windows PC':'Unknown';
+      return `<div class="dev-item">
+        <div class="dev-icon">${icon}</div>
+        <div class="dev-info">
+          <div class="dev-name">${d}</div>
+          <div class="dev-sub">Device #${i+1} · ${type}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('m-rev-btn').onclick=()=>{
+    closeModal();
+    revokeKey(keyId);
+  };
+
+  document.getElementById('modal').classList.add('show');
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+}
+
+document.getElementById('modal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('modal'))closeModal();
+});
+
+// ══ REVOKE ══
 async function revokeKey(key){
-  if(!confirm(`Revoke key ${key}?`))return;
+  if(!confirm(`Revoke key ${key}?\n\nKey ini akan langsung tidak bisa dipakai.`))return;
   try{await fbDel(`keys/${key}`);toast('Key direvoke!','ok');loadKeys();}
   catch(e){toast('Gagal: '+e.message,'err');}
 }
 
-function filterTable(){
-  const q=document.getElementById('si').value.toLowerCase();
-  renderTable(allKeys.filter(k=>k._id.toLowerCase().includes(q)||(k.label||'').toLowerCase().includes(q)));
-}
-
+// ══ EXPORT ══
 function exportJSON(){
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(allKeys,null,2)],{type:'application/json'}));
@@ -348,12 +592,17 @@ function exportJSON(){
 }
 function exportTXT(){
   const now=Math.floor(Date.now()/1000);
-  const txt=allKeys.map(k=>{const e=k.expiredAt||0;return`${k._id}|${k.label||'-'}|${e===0?'PERMANENT':now>e?'EXPIRED':'AKTIF'}`;}).join('\n');
+  const txt=allKeys.map(k=>{
+    const e=k.expiredAt||0;
+    const devs=Array.isArray(k.devices)?k.devices.join(';'):'-';
+    return`${k._id}|${k.label||'-'}|${e===0?'PERMANENT':now>e?'EXPIRED':'AKTIF'}|devices:${devs}`;
+  }).join('\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));
   a.download=`autosusu_keys_${Date.now()}.txt`;a.click();
 }
 
+// ══ TOAST & CLOCK ══
 let tt;
 function toast(msg,type='ok'){
   const el=document.getElementById('toast');
