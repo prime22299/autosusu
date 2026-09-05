@@ -61,7 +61,7 @@ local FIREBASE_API_KEY    = "AIzaSyAPw1UXjpQIxxznw5Mo8VEkXtaty5upbos"
 -- ════════════════════════════════════════════════
 --  AUTO UPDATE CONFIG
 -- ════════════════════════════════════════════════
-local CURRENT_VERSION  = "4.5"   -- versi script ini (admin update via panel)
+local CURRENT_VERSION  = "4.8"   -- versi script ini (admin update via panel)
 local GITHUB_RAW_URL   = "https://raw.githubusercontent.com/prime22299/autosusu/main/Autosusu.lua"
 local UPDATE_CHECK_DOC = "config/version" -- Firestore path untuk versi terbaru
 
