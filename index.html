@@ -689,6 +689,32 @@ header{animation:headerIn .4s ease both}
       </div>
     </div>
 
+    <!-- AUTO UPDATE PUSHER -->
+    <div class="panel">
+      <div class="ch">
+        <div class="ch-left">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M8 12l4-4 4 4M12 8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="ch-title">Push Update Script</span>
+        </div>
+        <span class="ch-meta" id="u-current-ver" style="color:var(--cyan)">v?</span>
+      </div>
+      <div class="cb" style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <label>Versi Baru</label>
+          <input type="text" id="u-ver" placeholder="cth: 4.6" style="width:100%;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:9px 13px;font-family:var(--mono);font-size:13px;color:var(--text);outline:none"/>
+        </div>
+        <div>
+          <label>URL Download Script <span style="color:var(--muted);font-weight:400">(opsional — kosong = GitHub default)</span></label>
+          <input type="text" id="u-url" placeholder="https://raw.githubusercontent.com/..." style="width:100%;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:9px 13px;font-family:var(--mono);font-size:12px;color:var(--text);outline:none"/>
+        </div>
+        <button class="btn-gen" onclick="pushUpdate()" style="background:linear-gradient(135deg,#006633,#00ff88);gap:8px">
+          <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M8 12l4-4 4 4M12 8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Push Update ke Semua User
+        </button>
+        <div id="u-status" style="font-family:var(--mono);font-size:11px;color:var(--muted);min-height:14px"></div>
+      </div>
+    </div>
+
     <!-- GENERATE -->
     <div class="panel">
       <div class="ch">
@@ -872,6 +898,7 @@ function doLogin(){
   if(u===CFG.adminUser&&p===CFG.adminPass){
     document.getElementById('ls').style.display='none';
     loadKeys();
+    loadCurrentVersion();
   } else {
     document.getElementById('le').textContent='Username atau password salah!';
   }
@@ -1295,6 +1322,54 @@ function exportTXT(){
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));
   a.download=`autosusu_keys_${Date.now()}.txt`;a.click();
+}
+
+// ══ AUTO UPDATE ══
+async function loadCurrentVersion() {
+  try {
+    const r = await fetch(`${BASE}/config/version?key=${KEY}`);
+    const d = await r.json();
+    const ver = d.fields?.version?.stringValue || '—';
+    document.getElementById('u-current-ver').textContent = 'v' + ver;
+    document.getElementById('u-ver').placeholder = 'Versi sekarang: ' + ver;
+  } catch(e) {
+    document.getElementById('u-current-ver').textContent = 'error';
+  }
+}
+
+async function pushUpdate() {
+  const ver = document.getElementById('u-ver').value.trim();
+  const url = document.getElementById('u-url').value.trim();
+  const statusEl = document.getElementById('u-status');
+  if (!ver) {
+    statusEl.textContent = '⚠ Isi versi baru dulu!';
+    statusEl.style.color = 'var(--amber)';
+    return;
+  }
+  statusEl.textContent = '⏳ Menyimpan ke Firebase...';
+  statusEl.style.color = 'var(--muted)';
+  try {
+    const fields = {
+      version:     { stringValue: ver },
+      updatedAt:   { integerValue: String(Math.floor(Date.now()/1000)) },
+      downloadUrl: { stringValue: url || '' },
+    };
+    const r = await fetch(`${BASE}/config/version?key=${KEY}`, {
+      method: 'PATCH',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({fields})
+    });
+    if (!r.ok) throw new Error(await r.text());
+    statusEl.textContent = `✅ Update v${ver} dipush! Semua user auto-update saat login.`;
+    statusEl.style.color = 'var(--green)';
+    document.getElementById('u-current-ver').textContent = 'v' + ver;
+    document.getElementById('u-ver').value = '';
+    toast(`Update v${ver} berhasil dipush!`, 'ok');
+  } catch(e) {
+    statusEl.textContent = '❌ Gagal: ' + e.message;
+    statusEl.style.color = 'var(--red)';
+    toast('Gagal push update', 'err');
+  }
 }
 
 // ══ TOAST & CLOCK ══
