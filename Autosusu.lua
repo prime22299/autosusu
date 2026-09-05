@@ -1,6 +1,6 @@
 script_name("AutoSusu_CPRP")
-script_author("PrimeSamp - cleaned by devx")
-script_version("4.6")
+script_author("PrimeSamp - cleaned by dev")
+script_version("4.5")
 
 require("lib.moonloader")
 local sampEvents = require("lib.samp.events")
