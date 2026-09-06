@@ -61,7 +61,7 @@ local FIREBASE_API_KEY    = "AIzaSyAPw1UXjpQIxxznw5Mo8VEkXtaty5upbos"
 -- ════════════════════════════════════════════════
 --  AUTO UPDATE CONFIG
 -- ════════════════════════════════════════════════
-local CURRENT_VERSION  = "5"   -- versi script ini (admin update via panel)
+local CURRENT_VERSION  = "4.5"   -- versi script ini (admin update via panel)
 local GITHUB_RAW_URL   = "https://raw.githubusercontent.com/prime22299/autosusu/main/Autosusu.lua"
 local UPDATE_CHECK_DOC = "config/version" -- Firestore path untuk versi terbaru
 
@@ -158,52 +158,71 @@ end
 -- ──────────────────────────────────────────────
 --  AUTO UPDATE SYSTEM
 -- ──────────────────────────────────────────────
-local isUpdating  = false
-local updateStatus = ""
+
+-- ── HTTP via requests library (support HTTPS, tidak crash GTA) ──
+local requests = require('requests')
+
+local function curlGET(url, callback)
+    lua_thread.create(function()
+        local ok, result = pcall(function()
+            local resp = requests.get(url)
+            return resp.text
+        end)
+        if callback then callback(ok and result or nil) end
+    end)
+end
+
+local function curlPATCH(url, bodyStr, callback)
+    lua_thread.create(function()
+        local ok, result = pcall(function()
+            local resp = requests.request('PATCH', url, {
+                headers = {['Content-Type'] = 'application/json'},
+                data    = bodyStr,
+            })
+            return resp.text
+        end)
+        if callback then callback(ok and result or nil) end
+    end)
+end
+
+-- ── AUTO UPDATE SYSTEM ──
+local isUpdating   = false
+local updateStatus = ''
+local lastUpdateCheck = 0
+local UPDATE_INTERVAL = 10 * 60  -- cek setiap 10 menit (detik)
 
 local function getVersionDocUrl()
     return string.format(
-        "https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents/%s?key=%s",
+        'https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents/%s?key=%s',
         FIREBASE_PROJECT_ID, UPDATE_CHECK_DOC, FIREBASE_API_KEY
     )
 end
 
 local function downloadAndUpdate(dlUrl)
     isUpdating = true
-    updateStatus = "Mengunduh update..."
-    chat("{00D4FF}[PrimeBot]{FFFFFF} Mengunduh update dari server...")
+    updateStatus = 'Mengunduh update...'
+    chat('{00D4FF}[PrimeBot]{FFFFFF} Mengunduh update dari server...')
     curlGET(dlUrl, function(body)
         if not body or #body < 100 then
-            updateStatus = "Gagal download!"
-            chat("{FF0000}[PrimeBot]{FFFFFF} Gagal download update.")
+            updateStatus = 'Gagal download!'
+            chat('{FF0000}[PrimeBot]{FFFFFF} Gagal download update.')
             isUpdating = false
             return
         end
-        -- Cari path script ini
         local wd = getWorkingDirectory()
-        local candidates = {
-            wd .. "\\Autosusu.lua",
-            wd .. "\\autosusu.lua",
-        }
-        local scriptFile = nil
-        for _, p in ipairs(candidates) do
-            local t = io.open(p, "r")
-            if t then t:close(); scriptFile = p; break end
-        end
-        if not scriptFile then
-            scriptFile = wd .. "\\Autosusu.lua"
-        end
-        local f = io.open(scriptFile, "w")
+        local scriptFile = wd .. '\\Autosusu.lua'
+        local t = io.open(wd .. '\\autosusu.lua', 'r')
+        if t then t:close(); scriptFile = wd .. '\\autosusu.lua' end
+        local f = io.open(scriptFile, 'w')
         if not f then
-            updateStatus = "Gagal tulis file!"
-            chat("{FF0000}[PrimeBot]{FFFFFF} Gagal menulis file update.")
+            updateStatus = 'Gagal tulis file!'
+            chat('{FF0000}[PrimeBot]{FFFFFF} Gagal menulis file update.')
             isUpdating = false
             return
         end
-        f:write(body)
-        f:close()
-        updateStatus = "Selesai! Reload..."
-        chat("{00FF88}[PrimeBot]{FFFFFF} Update berhasil! Reload otomatis dalam 2 detik...")
+        f:write(body); f:close()
+        updateStatus = 'Selesai! Reload...'
+        chat('{00FF88}[PrimeBot]{FFFFFF} Update berhasil! Reload otomatis dalam 2 detik...')
         lua_thread.create(function()
             wait(2000)
             thisScript():reload()
@@ -211,75 +230,46 @@ local function downloadAndUpdate(dlUrl)
     end)
 end
 
-local function checkForUpdate()
+local function checkForUpdate(silent)
     if isUpdating then return end
+    lastUpdateCheck = os.time()
     curlGET(getVersionDocUrl(), function(body)
         if not body or #body == 0 then return end
         if body:find('"NOT_FOUND"') or body:find('"error"') then return end
-        local latestVer  = body:match('"version"%s*:%s*{%s*"stringValue"%s*:%s*"([^"]*)"')
-        local dlUrl      = body:match('"downloadUrl"%s*:%s*{%s*"stringValue"%s*:%s*"([^"]*)"')
+        local latestVer = body:match('"version"%s*:%s*{%s*"stringValue"%s*:%s*"([^"]*)"')
+        local dlUrl     = body:match('"downloadUrl"%s*:%s*{%s*"stringValue"%s*:%s*"([^"]*)"')
         if not latestVer then return end
-        if not dlUrl or dlUrl == "" then dlUrl = GITHUB_RAW_URL end
+        if not dlUrl or dlUrl == '' then dlUrl = GITHUB_RAW_URL end
         if latestVer ~= CURRENT_VERSION then
+            -- Notifikasi ada update
             chat(string.format(
-                "{FFFF00}[PrimeBot]{FFFFFF} Update tersedia! v%s to v%s. Download otomatis...",
-                CURRENT_VERSION, latestVer
-            ))
-            downloadAndUpdate(dlUrl)
+                '{FFFF00}[PrimeBot]{FFFFFF} >> UPDATE TERSEDIA! v%s >> v%s <<',
+                CURRENT_VERSION, latestVer))
+            chat('{FFFF00}[PrimeBot]{FFFFFF} Download otomatis dalam 3 detik...')
+            lua_thread.create(function()
+                wait(3000)
+                downloadAndUpdate(dlUrl)
+            end)
+        elseif not silent then
+            chat('{00FF88}[PrimeBot]{FFFFFF} Script sudah versi terbaru (v' .. CURRENT_VERSION .. ')')
         end
     end)
 end
 
+-- Timer: cek update di background setiap 10 menit
+lua_thread.create(function()
+    wait(5000)  -- tunggu 5 detik dulu setelah script load
+    while true do
+        wait(60000)  -- cek setiap 1 menit apakah sudah waktunya
+        if licenseState.verified then  -- hanya cek kalau sudah login
+            local now = os.time()
+            if now - lastUpdateCheck >= UPDATE_INTERVAL then
+                checkForUpdate(true)  -- silent=true, tidak muncul pesan kalau sudah update
+            end
+        end
+    end
+end)
 
--- HTTP via os.execute + PowerShell (MoonLoader PC Windows)
-local function httpGET(url, callback)
-    lua_thread.create(function()
-        local tmpFile = getWorkingDirectory() .. "\\__fbget.tmp"
-        local ps = string.format(
-            "try{$r=Invoke-WebRequest -Uri '%s' -UseBasicParsing -TimeoutSec 10;" ..
-            "$r.Content|Out-File -Encoding UTF8 '%s'}" ..
-            "catch{Set-Content '%s' 'REQERROR'}",
-            url, tmpFile, tmpFile
-        )
-        local cmd = 'powershell -NoProfile -WindowStyle Hidden -Command "' .. ps .. '"'
-        os.execute(cmd)
-        local f = io.open(tmpFile, "r")
-        local body = f and f:read("*a") or nil
-        if f then f:close() end
-        os.remove(tmpFile)
-        if body and body:find("REQERROR") then body = nil end
-        if callback then callback(body) end
-    end)
-end
-
-local function httpPATCH(url, bodyStr, callback)
-    lua_thread.create(function()
-        local tmpIn  = getWorkingDirectory() .. "\\__fbpatch_in.tmp"
-        local tmpOut = getWorkingDirectory() .. "\\__fbpatch_out.tmp"
-        local fi = io.open(tmpIn, "w")
-        if fi then fi:write(bodyStr); fi:close() end
-        local ps = string.format(
-            "try{$b=Get-Content '%s' -Raw;" ..
-            "$r=Invoke-WebRequest -Uri '%s' -Method PATCH " ..
-            "-Body $b -ContentType 'application/json' -UseBasicParsing -TimeoutSec 10;" ..
-            "$r.Content|Out-File -Encoding UTF8 '%s'}" ..
-            "catch{Set-Content '%s' 'REQERROR'}",
-            tmpIn, url, tmpOut, tmpOut
-        )
-        local cmd = 'powershell -NoProfile -WindowStyle Hidden -Command "' .. ps .. '"'
-        os.execute(cmd)
-        local fo = io.open(tmpOut, "r")
-        local resp = fo and fo:read("*a") or nil
-        if fo then fo:close() end
-        os.remove(tmpIn)
-        os.remove(tmpOut)
-        if resp and resp:find("REQERROR") then resp = nil end
-        if callback then callback(resp) end
-    end)
-end
-
-local curlGET   = httpGET
-local curlPATCH = httpPATCH
 
 
 -- Firestore JSON parsers (tanpa library JSON)
@@ -904,7 +894,7 @@ function main()
         end
     end)
 
-    chat("{00FF00}[PrimeBot v5]{FFFFFF} Panel Ready! Ketik {00FF00}/autosusu")
+    chat("{00FF00}[PrimeBot v4.5]{FFFFFF} Panel Ready! Ketik {00FF00}/autosusu")
 
     wait(1000)
     silentCheck = true
