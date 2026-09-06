@@ -55,8 +55,8 @@ local selectedRoute = -1
 -- ════════════════════════════════════════════════
 --  FIREBASE CONFIG  ← WAJIB DIISI
 -- ════════════════════════════════════════════════
-local FIREBASE_PROJECT_ID = "autosusu-cprp"
-local FIREBASE_API_KEY    = "AIzaSyAPw1UXjpQIxxznw5Mo8VEkXtaty5upbos"
+local FIREBASE_PROJECT_ID = "autosusu-v2"
+local FIREBASE_API_KEY    = "AIzaSyAMYjeaRjEg2fKk7MlI1XWJgpDItKrv9dk"
 
 -- ════════════════════════════════════════════════
 --  AUTO UPDATE CONFIG
